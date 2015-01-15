@@ -1,0 +1,24 @@
+{
+    "name": "omnilight/yii2-highcharts",
+    "description": "Highcharts widget for Yii2 framework",
+    "keywords": ["yii2", "highcharts"],
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Pavel Agalecky",
+            "email": "pavel.agalecky@gmail.com"
+        }
+    ],
+    "type": "yii2-extension",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "bower-asset/highcharts": "~4"
+    },
+    "autoload": {
+        "psr-4": {
+            "omnilight\\assets\\": "",
+            "omnilight\\widgets\\": ""
+        }
+    }
+}
