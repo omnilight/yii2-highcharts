@@ -5,6 +5,8 @@ use omnilight\assets\HighchartsAsset;
 use yii\bootstrap\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Json;
+use yii\helpers\Url;
 
 
 /**
@@ -28,6 +30,10 @@ class Highcharts extends Widget
      * @var string
      */
     public $theme = null;
+    /**
+     * @var string
+     */
+    public $jsonUrl = null;
 
     public function run()
     {
@@ -49,7 +55,23 @@ class Highcharts extends Widget
             'modules' => $this->modules,
             'theme' => $this->theme,
         ]);
-        $options = $this->clientOptions;
-        $this->view->registerJs("var {$this->id} = new Highcharts.Chart({$options});");
+        $options = Json::encode($this->clientOptions);
+        if ($this->jsonUrl) {
+            $url = Url::to($this->jsonUrl);
+            $js =<<<JS
+var {$this->id};
+$.getJSON('{$url}', function(data) {
+    var options = {$options};
+    options.series = [{data: data}];
+    {$this->id} = new Highcharts.Chart(options);
+});
+JS;
+        } else {
+            $js =<<<JS
+var {$this->id} = new Highcharts.Chart({$options});
+JS;
+
+        }
+        $this->view->registerJs($js);
     }
 }

@@ -12,7 +12,7 @@ use yii\web\View;
  */
 class HighchartsAsset extends AssetBundle
 {
-    public $sourcePath = '@bower/highcharts/slick';
+    public $sourcePath = '@bower/highcharts';
 
     public $js = [
         'highcharts.js'
