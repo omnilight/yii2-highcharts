@@ -44,7 +44,7 @@ class Highcharts extends Widget
                 'id' => $this->id,
             ],$this->options);
             echo Html::tag($tag, '', $options);
-            $this->clientOptions['chart']['renderTo'] = '#'.$this->id;
+            $this->clientOptions['chart']['renderTo'] = $this->id;
         }
         $this->registerClientScripts();
     }
