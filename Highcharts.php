@@ -34,6 +34,10 @@ class Highcharts extends Widget
      * @var string
      */
     public $jsonUrl = null;
+    /**
+     * @var string
+     */
+    public $jsonSeriesUrl = null;
 
     public function run()
     {
@@ -58,11 +62,21 @@ class Highcharts extends Widget
         $options = Json::encode($this->clientOptions);
         if ($this->jsonUrl) {
             $url = Url::to($this->jsonUrl);
-            $js =<<<JS
+            $js = <<<JS
 var {$this->id};
 $.getJSON('{$url}', function(data) {
     var options = {$options};
     options.series = [{data: data}];
+    {$this->id} = new Highcharts.Chart(options);
+});
+JS;
+        } elseif ($this->jsonSeriesUrl) {
+            $url = Url::to($this->jsonSeriesUrl);
+            $js = <<<JS
+var {$this->id};
+$.getJSON('{$url}', function(data) {
+    var options = {$options};
+    options.series = data;
     {$this->id} = new Highcharts.Chart(options);
 });
 JS;
